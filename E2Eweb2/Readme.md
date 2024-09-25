@@ -1,7 +1,7 @@
 aws s3 cp s3://ttt-wildrydes/wildrydes-site ./ --recursive
 ```sh 
 cd web
-zip ../web.zip *
+zip -r ../web.zip *
 aws s3api create-bucket \
 --bucket sourecode-bucket \
 --create-bucket-configuration="LocationConstraint=eu-north-1"
