@@ -12,7 +12,7 @@ Step 1: To create app with name as appName. aws amplify create-app --name dry-we
 
 Step 2: To create branch. 
 ```sh
-aws amplify create-branch --region eu-north-1 --app-id "d7a05orkpgv8p" --branch-name "master". There are other ways to create branch as well.
+aws amplify create-branch --region eu-north-1 --app-id "d7a05orkpgv8p" --branch-name "master"
 ```
 
 Step 3: To deploy. 
@@ -22,6 +22,6 @@ aws amplify start-deployment --region eu-north-1 --app-id "d7a05orkpgv8p" --bran
 
 Step 4: To verify deployment status, 
 ```sh 
-aws amplify get-job --region eu-north-1 --app-id "d7a05orkpgv8p" --branch-name "master" --job-id "5" --query job.summary.status --output text
+aws amplify get-job --region eu-north-1 --app-id "d7a05orkpgv8p" --branch-name "master" --job-id "6" --query job.summary.status --output text
 ```
 
