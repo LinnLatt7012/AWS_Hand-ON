@@ -16,14 +16,14 @@ if [ -z "$Table_Arn" ]; then
     echo "Table '$TABLE_NAME' does not exist. Creating a new DynamoDB table..."
 
     # Create the DynamoDB table
-    Table_Arn=aws dynamodb create-table \
+    Table_Arn=$(aws dynamodb create-table \
         --table-name $TABLE_NAME \
         --attribute-definitions AttributeName=$HASH_KEY_NAME,AttributeType=$HASH_KEY_TYPE \
         --key-schema AttributeName=$HASH_KEY_NAME,KeyType=HASH \
         --provisioned-throughput ReadCapacityUnits=$READ_CAPACITY_UNITS,WriteCapacityUnits=$WRITE_CAPACITY_UNITS \
         --region $REGION \
         --query  'TableDescription.TableArn' \
-        --output text
+        --output text)
 
     echo "Waiting for DynamoDB table '$TABLE_NAME' to become ACTIVE..."
     aws dynamodb wait table-exists --table-name $TABLE_NAME --region $REGION
