@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -z "$1" ]; then
+  echo "Argument not provided."
+else
+  export App_ID="$1"
+fi
+
+if [ -z "$2" ]; then
+  echo "Argument not provided."
+else
+  export Branch_Name="$2"
+fi
+
+if [ -z "$3" ]; then
+    Region="eu-north-1"
+else
+  export Region="$3"
+fi
+
+if [ -z "$4" ]; then
+    zip_Name="eu-north-1"
+else
+  export zip_Name="$4"
+fi
+
+Job_ID=$(aws amplify start-deployment --region $Region --app-id $App_ID --branch-name $Branch_Name --source-url "s3://sourecode-bucket/$zip_Name" --query jobSummary.jobId --output text)
+Status=$(aws amplify get-job --region $Region --app-id $App_ID --branch-name $Branch_Name --job-id $Job_ID --query job.summary.status --output text)

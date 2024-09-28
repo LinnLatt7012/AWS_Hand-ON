@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -z "$1" ]; then
+  echo "Argument not provided."
+else
+  export App_Name="$1"
+fi
+
+if [ -z "$2" ]; then
+  Region="eu-north-1"
+else
+  export Region="$2"
+fi
+
+
+App_ID=$(aws amplify create-app --name $App_Name --region $Region --query app.appId --output text)
+Branch_Name=$(aws amplify create-branch --region $Region --app-id $App_ID --branch-name "master" --query branch.branchName --output text)
+
+echo "./deployAmplifyApp $App_ID $Branch_Name $Region --your zip name--"
