@@ -28,3 +28,5 @@ fi
 
 Job_ID=$(aws amplify start-deployment --region $Region --app-id $App_ID --branch-name $Branch_Name --source-url "s3://sourecode-bucket/$zip_Name" --query jobSummary.jobId --output text)
 Status=$(aws amplify get-job --region $Region --app-id $App_ID --branch-name $Branch_Name --job-id $Job_ID --query job.summary.status --output text)
+
+echo $Status
