@@ -1,0 +1,21 @@
+
+# Enable CORS by adding necessary response headers to the POST method
+echo "Enabling CORS for the $METHOD method..."
+
+# Step 1: Set up the OPTIONS preflight method
+aws apigateway put-method --rest-api-id $API_ID --resource-id $ROOT_RESOURCE_ID --http-method OPTIONS --authorization-type "NONE" --output json >/dev/null
+
+# Step 2: Set up integration for OPTIONS preflight
+aws apigateway put-integration --rest-api-id $API_ID --resource-id $ROOT_RESOURCE_ID --http-method OPTIONS --type MOCK --request-templates '{"application/json":"{\"statusCode\": 200}"}' --output json >/dev/null
+
+# Step 3: Configure CORS response headers for OPTIONS method
+aws apigateway put-method-response --rest-api-id $API_ID --resource-id $ROOT_RESOURCE_ID --http-method OPTIONS --status-code 200 --response-models '{"application/json": "Empty"}' >/dev/null
+
+aws apigateway put-integration-response --rest-api-id $API_ID --resource-id $ROOT_RESOURCE_ID --http-method OPTIONS --status-code 200 \
+--response-parameters '{"method.response.header.Access-Control-Allow-Origin": "'\'*\''"}'
+
+# # Step 4: Configure CORS response headers for POST method
+# aws apigateway put-method-response --rest-api-id $API_ID --resource-id $ROOT_RESOURCE_ID --http-method $METHOD --status-code 200 --response-parameters 'method.response.header.Access-Control-Allow-Origin=true' >/dev/null
+
+# aws apigateway put-integration-response --rest-api-id $API_ID --resource-id $ROOT_RESOURCE_ID --http-method $METHOD --status-code 200 \
+# --response-parameters '{"method.response.header.Access-Control-Allow-Origin": "'\'*\''"}' >/dev/null
