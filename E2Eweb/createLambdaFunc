@@ -43,12 +43,14 @@ EOL
     # Create the IAM role
     aws iam create-role --role-name $ROLE_NAME \
         --assume-role-policy-document file://trust-policy.json >/dev/null
+    
     aws iam create-policy \
         --policy-name my-fun-policy \
         --policy-document file://policy.json
     # Attach the basic execution role policy
     aws iam attach-role-policy --role-name $ROLE_NAME \
         --policy-arn $ROLE_POLICY_ARN
+
     aws iam --role-name $ROLE_NAME \
         --policy-arn $Custom_Policy_ARN
     # Wait for the role to propagate

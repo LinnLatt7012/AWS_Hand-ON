@@ -1,0 +1,24 @@
+#!/bin/bash
+BUCKET_NAME='blogbucket-linnlatt'
+FOLDER='blog'
+echo "== put object =="
+if [ -z "$1" ]; then
+    echo "there need file"
+    exit -1
+fi
+
+if [ -n "$2" ]; then
+    FOLDER=$2
+fi
+
+if [ -n "$3" ]; then
+    BUCKET_NAME=$3
+fi
+
+FILE=$1
+Key="$FOLDER/$(basename "$FILE")"
+
+aws s3api put-object \
+--bucket $BUCKET_NAME \
+--body $FILE \
+--key $Key
